@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ACCESS REQUIRED</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cyan: #00f5ff;
+      --magenta: #ff00aa;
+      --green: #39ff14;
+      --dark: #020408;
+      --dark2: #060d14;
+      --grid: rgba(0,245,255,0.04);
+    }
+
+    body {
+      background: var(--dark);
+      color: var(--cyan);
+      font-family: 'Share Tech Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Grid bg */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridScroll 20s linear infinite;
+    }
+
+    @keyframes gridScroll {
+      from { background-position: 0 0; }
+      to { background-position: 40px 40px; }
+    }
+
+    /* Scanlines */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.15) 2px,
+        rgba(0,0,0,0.15) 4px
+      );
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .glitch-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      font-weight: 900;
+      letter-spacing: 0.3em;
+      color: var(--cyan);
+      text-shadow: 0 0 20px var(--cyan), 0 0 40px var(--cyan);
+      position: relative;
+      animation: flicker 4s infinite;
+    }
+
+    .glitch-title::before,
+    .glitch-title::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0; right: 0;
+    }
+    .glitch-title::before {
+      color: var(--magenta);
+      animation: glitch1 3s infinite;
+      clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+    }
+    .glitch-title::after {
+      color: var(--green);
+      animation: glitch2 3s infinite;
+      clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+    }
+
+    @keyframes glitch1 {
+      0%, 95%, 100% { transform: translate(0); }
+      96% { transform: translate(-3px, 1px); }
+      97% { transform: translate(3px, -1px); }
+      98% { transform: translate(-2px, 2px); }
+    }
+    @keyframes glitch2 {
+      0%, 90%, 100% { transform: translate(0); }
+      91% { transform: translate(3px, -2px); }
+      93% { transform: translate(-3px, 1px); }
+    }
+    @keyframes flicker {
+      0%, 97%, 100% { opacity: 1; }
+      98% { opacity: 0.8; }
+      99% { opacity: 1; }
+    }
+
+    .subtitle {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.4em;
+      color: rgba(0,245,255,0.5);
+    }
+
+    .lock-box {
+      margin-top: 3rem;
+      border: 1px solid rgba(0,245,255,0.3);
+      padding: 2.5rem 3rem;
+      position: relative;
+      background: rgba(0,20,30,0.7);
+      backdrop-filter: blur(10px);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .lock-box::before,
+    .lock-box::after {
+      content: '';
+      position: absolute;
+      width: 12px; height: 12px;
+      border-color: var(--cyan);
+      border-style: solid;
+    }
+    .lock-box::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+    .lock-box::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+    .lock-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+      filter: drop-shadow(0 0 10px var(--cyan));
+    }
+
+    .prompt-text {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: rgba(0,245,255,0.6);
+      margin-bottom: 1.5rem;
+    }
+
+    /* PIN dots */
+    .pin-display {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .pin-dot {
+      width: 14px; height: 14px;
+      border: 2px solid rgba(0,245,255,0.4);
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+    .pin-dot.filled {
+      background: var(--cyan);
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+    }
+    .pin-dot.error {
+      background: var(--magenta);
+      border-color: var(--magenta);
+      box-shadow: 0 0 12px var(--magenta);
+    }
+
+    /* Keypad */
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    .key {
+      background: rgba(0,245,255,0.05);
+      border: 1px solid rgba(0,245,255,0.2);
+      color: var(--cyan);
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 0.9rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .key:hover {
+      background: rgba(0,245,255,0.15);
+      border-color: var(--cyan);
+      box-shadow: 0 0 15px rgba(0,245,255,0.3);
+    }
+    .key:active {
+      background: rgba(0,245,255,0.3);
+      transform: scale(0.96);
+    }
+    .key.del {
+      color: var(--magenta);
+      border-color: rgba(255,0,170,0.2);
+    }
+    .key.del:hover {
+      background: rgba(255,0,170,0.15);
+      border-color: var(--magenta);
+      box-shadow: 0 0 15px rgba(255,0,170,0.3);
+    }
+    .key.zero { grid-column: 2; }
+
+    .error-msg {
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--magenta);
+      text-shadow: 0 0 10px var(--magenta);
+      opacity: 0;
+      transition: opacity 0.3s;
+      min-height: 1.2em;
+    }
+    .error-msg.visible { opacity: 1; }
+
+    /* Shake animation */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+    .shake { animation: shake 0.4s ease; }
+
+    .corner-tag {
+      position: fixed;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: rgba(0,245,255,0.2);
+    }
+    .corner-tag.tl { top: 1rem; left: 1rem; }
+    .corner-tag.tr { top: 1rem; right: 1rem; }
+    .corner-tag.bl { bottom: 1rem; left: 1rem; }
+    .corner-tag.br { bottom: 1rem; right: 1rem; }
+  </style>
+</head>
+<body>
+  <span class="corner-tag tl">SYS://PORTFOLIO</span>
+  <span class="corner-tag tr">v1.0.0</span>
+  <span class="corner-tag bl">ENCRYPTED</span>
+  <span class="corner-tag br">AUTH_REQ</span>
+
+  <div class="container">
+    <h1 class="glitch-title" data-text="ACCESS LOCKED">ACCESS LOCKED</h1>
+    <p class="subtitle">AUTHORIZATION REQUIRED</p>
+
+    <div class="lock-box">
+      <span class="lock-icon">⬡</span>
+      <p class="prompt-text">ENTER 4-DIGIT PIN TO CONTINUE</p>
+
+      <div class="pin-display" id="pinDisplay">
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+      </div>
+
+      <div class="keypad">
+        <button class="key" onclick="pressKey('1')">1</button>
+        <button class="key" onclick="pressKey('2')">2</button>
+        <button class="key" onclick="pressKey('3')">3</button>
+        <button class="key" onclick="pressKey('4')">4</button>
+        <button class="key" onclick="pressKey('5')">5</button>
+        <button class="key" onclick="pressKey('6')">6</button>
+        <button class="key" onclick="pressKey('7')">7</button>
+        <button class="key" onclick="pressKey('8')">8</button>
+        <button class="key" onclick="pressKey('9')">9</button>
+        <button class="key del" onclick="deleteKey()">DEL</button>
+        <button class="key zero" onclick="pressKey('0')">0</button>
+      </div>
+
+      <div class="error-msg" id="errorMsg">⚠ ACCESS DENIED — INVALID PIN</div>
+    </div>
+  </div>
+
+  <script>
+    let pin = '';
+    const dots = document.querySelectorAll('.pin-dot');
+    const errorMsg = document.getElementById('errorMsg');
+    const lockBox = document.querySelector('.lock-box');
+
+    function updateDots() {
+      dots.forEach((d, i) => {
+        d.classList.toggle('filled', i < pin.length);
+        d.classList.remove('error');
+      });
+    }
+
+    function pressKey(digit) {
+      if (pin.length >= 4) return;
+      pin += digit;
+      updateDots();
+      if (pin.length === 4) setTimeout(submitPin, 200);
+    }
+
+    function deleteKey() {
+      pin = pin.slice(0, -1);
+      updateDots();
+      errorMsg.classList.remove('visible');
+    }
+
+    async function submitPin() {
+      const res = await fetch('/verify-pin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin })
+      });
+      const data = await res.json();
+      if (data.success) {
+        document.body.style.transition = 'opacity 0.5s';
+        document.body.style.opacity = '0';
+        setTimeout(() => window.location.href = '/', 500);
+      } else {
+        dots.forEach(d => d.classList.add('error'));
+        lockBox.classList.add('shake');
+        errorMsg.classList.add('visible');
+        setTimeout(() => {
+          lockBox.classList.remove('shake');
+          pin = '';
+          updateDots();
+        }, 500);
+      }
+    }
+
+    // Keyboard support
+    document.addEventListener('keydown', e => {
+      if (e.key >= '0' && e.key <= '9') pressKey(e.key);
+      if (e.key === 'Backspace') deleteKey();
+    });
+  </script>
+</body>
+</html>
