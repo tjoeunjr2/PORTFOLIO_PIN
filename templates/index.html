@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css"/>
+</head>
+<body>
+  <!-- Scanlines overlay -->
+  <div class="scanlines"></div>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <span class="bracket">[</span>
+      <span id="navName">DEV</span>
+      <span class="bracket">]</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#hero" class="nav-link active">HOME</a></li>
+      <li><a href="#about" class="nav-link">ABOUT</a></li>
+      <li><a href="#skills" class="nav-link">SKILLS</a></li>
+      <li><a href="#projects" class="nav-link">PROJECTS</a></li>
+      <li><a href="#contact" class="nav-link">CONTACT</a></li>
+    </ul>
+    <button class="lock-btn" onclick="lockSite()">LOCK ⬡</button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="blink">▮</span> SYSTEM ONLINE — PORTFOLIO LOADED
+      </div>
+      <!-- ✅ 이름을 여기서 변경하세요 -->
+      <h1 class="hero-name" data-text="YOUR NAME">YOUR NAME</h1>
+      <div class="hero-role">
+        <span class="role-prefix">const role = "</span>
+        <span class="typed-text" id="typedRole"></span>
+        <span class="cursor-blink">|</span>
+        <span class="role-suffix">";</span>
+      </div>
+      <p class="hero-desc">
+        <!-- ✅ 한 줄 소개를 변경하세요 -->
+        풀스택 개발자로서 아이디어를 현실로 만드는 코드를 씁니다.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">VIEW WORK</a>
+        <a href="#contact" class="btn-secondary">CONTACT</a>
+      </div>
+    </div>
+    <div class="hero-code-block">
+      <div class="code-header">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="code-filename">portfolio.js</span>
+      </div>
+      <pre class="code-body"><span class="kw">const</span> <span class="var">developer</span> = {
+  <span class="key">name</span>: <span class="str">"Your Name"</span>,
+  <span class="key">passion</span>: <span class="str">"Building things"</span>,
+  <span class="key">stack</span>: [<span class="str">"Python"</span>, <span class="str">"JS"</span>, <span class="str">"React"</span>],
+  <span class="key">available</span>: <span class="bool">true</span>,
+};
+
+<span class="kw">export default</span> developer;</pre>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">// ABOUT</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 class="section-title">나는 누구인가</h2>
+        <p>
+          <!-- ✅ 자기소개를 여기서 수정하세요 -->
+          안녕하세요! 저는 <strong>Your Name</strong>입니다. 
+          문제를 코드로 해결하는 것을 즐기며, 사용자 경험과 
+          성능 모두를 중요하게 생각하는 개발자입니다.
+        </p>
+        <p>
+          새로운 기술 학습을 즐기고, 오픈소스 기여와 
+          팀 협업을 통해 함께 성장하는 것을 추구합니다.
+        </p>
+        <div class="about-stats">
+          <!-- ✅ 경력 통계를 수정하세요 -->
+          <div class="stat">
+            <span class="stat-num">3+</span>
+            <span class="stat-label">YEARS EXP</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">20+</span>
+            <span class="stat-label">PROJECTS</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">∞</span>
+            <span class="stat-label">COFFEE</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-terminal">
+        <div class="terminal-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span style="color:rgba(0,245,255,0.4);font-size:0.7rem;margin-left:0.5rem;">terminal</span>
+        </div>
+        <div class="terminal-body" id="terminalBody"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">// SKILLS</div>
+    <h2 class="section-title">기술 스택</h2>
+    <div class="skills-grid">
+      <!-- ✅ 기술 스택을 수정하세요 -->
+      <div class="skill-category">
+        <div class="skill-cat-title">FRONTEND</div>
+        <div class="skill-items">
+          <div class="skill-item"><span>HTML/CSS</span><div class="skill-bar"><div class="skill-fill" style="--pct:95%"></div></div></div>
+          <div class="skill-item"><span>JavaScript</span><div class="skill-bar"><div class="skill-fill" style="--pct:90%"></div></div></div>
+          <div class="skill-item"><span>React</span><div class="skill-bar"><div class="skill-fill" style="--pct:80%"></div></div></div>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">BACKEND</div>
+        <div class="skill-items">
+          <div class="skill-item"><span>Python</span><div class="skill-bar"><div class="skill-fill" style="--pct:92%"></div></div></div>
+          <div class="skill-item"><span>Flask/Django</span><div class="skill-bar"><div class="skill-fill" style="--pct:85%"></div></div></div>
+          <div class="skill-item"><span>Node.js</span><div class="skill-bar"><div class="skill-fill" style="--pct:70%"></div></div></div>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">TOOLS & DB</div>
+        <div class="skill-items">
+          <div class="skill-item"><span>Git/GitHub</span><div class="skill-bar"><div class="skill-fill" style="--pct:90%"></div></div></div>
+          <div class="skill-item"><span>PostgreSQL</span><div class="skill-bar"><div class="skill-fill" style="--pct:75%"></div></div></div>
+          <div class="skill-item"><span>Docker</span><div class="skill-bar"><div class="skill-fill" style="--pct:65%"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">// PROJECTS</div>
+    <h2 class="section-title">프로젝트</h2>
+    <div class="projects-grid">
+      <!-- ✅ 프로젝트 카드를 수정/추가하세요 -->
+      <div class="project-card">
+        <div class="project-tag">WEB APP</div>
+        <h3 class="project-title">프로젝트 이름 01</h3>
+        <p class="project-desc">프로젝트에 대한 간략한 설명을 입력하세요. 어떤 문제를 해결했는지, 어떤 기술을 사용했는지 작성합니다.</p>
+        <div class="project-stack">
+          <span>React</span><span>Python</span><span>AWS</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="proj-link">GITHUB →</a>
+          <a href="#" class="proj-link demo">LIVE →</a>
+        </div>
+      </div>
+
+      <div class="project-card featured">
+        <div class="project-tag">FEATURED</div>
+        <h3 class="project-title">프로젝트 이름 02</h3>
+        <p class="project-desc">대표 프로젝트 설명. 주요 성과나 인상적인 수치가 있다면 함께 적어보세요. 팀 규모나 역할도 좋습니다.</p>
+        <div class="project-stack">
+          <span>Next.js</span><span>Flask</span><span>PostgreSQL</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="proj-link">GITHUB →</a>
+          <a href="#" class="proj-link demo">LIVE →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-tag">TOOL</div>
+        <h3 class="project-title">프로젝트 이름 03</h3>
+        <p class="project-desc">세 번째 프로젝트 설명. 개인 프로젝트, 사이드 프로젝트, 오픈소스 기여 등 다양하게 기입할 수 있어요.</p>
+        <div class="project-stack">
+          <span>Python</span><span>Docker</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="proj-link">GITHUB →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">// CONTACT</div>
+    <h2 class="section-title">연락하기</h2>
+    <div class="contact-wrapper">
+      <p class="contact-sub">협업 제안, 채용 문의, 혹은 그냥 안녕 한마디도 환영합니다.</p>
+      <div class="contact-links">
+        <!-- ✅ 연락처를 수정하세요 -->
+        <a href="mailto:your@email.com" class="contact-item">
+          <span class="contact-icon">✉</span>
+          <span>your@email.com</span>
+        </a>
+        <a href="https://github.com/yourgithub" class="contact-item" target="_blank">
+          <span class="contact-icon">⌥</span>
+          <span>github.com/yourgithub</span>
+        </a>
+        <a href="https://linkedin.com/in/yourlinkedin" class="contact-item" target="_blank">
+          <span class="contact-icon">◈</span>
+          <span>linkedin.com/in/yourlinkedin</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>// BUILT WITH FLASK + VERCEL — <span style="color:var(--cyan)">YOUR NAME</span> © 2025</p>
+  </footer>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
